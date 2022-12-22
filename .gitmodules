@@ -1,0 +1,9 @@
+[submodule "ML_kws_tflu"]
+	path = ML_kws_tflu
+	url = https://github.com/OpenNuvoton/ML_kws_tflu.git
+[submodule "ML_audio_aq"]
+	path = ML_audio_aq
+	url = https://github.com/OpenNuvoton/ML_audio_aq.git
+[submodule "ML_audio_record"]
+	path = ML_audio_record
+	url = https://github.com/OpenNuvoton/ML_audio_record.git
