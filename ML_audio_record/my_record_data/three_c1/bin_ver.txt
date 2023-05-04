@@ -1,0 +1,6 @@
+I2S_Codec_PDMA_SCA_max.bin ==>
+I2C_WriteNAU8822(7,  0x006);		
+I2C_WriteNAU8822(6,  0x1AD);   /* Divide by 6, 16K */
+I2C_WriteNAU8822(15, 0x1FF);   /* ADC left digital volume control */
+I2C_WriteNAU8822(16, 0x1FF);   /* ADC right digital volume control */
+trans = PCM_WAV_pro(1, 'raw')
