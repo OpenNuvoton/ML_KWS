@@ -3,7 +3,7 @@ ML-Tool for kws with combining other submodules
 
 # First step
 - Download the [anaconda](https://www.anaconda.com/products/distribution) and install it.
-- `git clone --recurse-submodules https://github.com/OpenNuvoton/ML_nukws.git`
+- `git clone https://github.com/OpenNuvoton/ML_nukws.git`
 - Use `jupyterLab_env_set.ipynb` in ML_nukws to create the KWS python running environment.
 - Download and install Nu-Link, and please choose [KEIL Nu-Link debugger driver installer](https://github.com/OpenNuvoton/Nuvoton_Tools)
 ---
