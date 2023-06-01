@@ -2,7 +2,7 @@
 ML-Tool for Keyword Spotting which including data collecting with EVB, training and converting.
 
 # 1. First step
-- If you havn't install [NuEdgeWise](https://github.com/MaxCYCHEN/NuEdgeWise), please follow the steps to install python virtual env and ***choose `NuEdgeWise`***.
+- If you havn't install [NuEdgeWise](https://github.com/MaxCYCHEN/NuEdgeWise), please follow the steps to install python virtual env and ***choose `NuEdgeWise_env`***.
 - Download and install Nu-Link, and please choose [KEIL Nu-Link debugger driver installer](https://github.com/OpenNuvoton/Nuvoton_Tools)
 ---
 # 2. Work Flow
