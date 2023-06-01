@@ -2,7 +2,7 @@
 ML-Tool for Keyword Spotting which including data collecting with EVB, training and converting.
 
 # 1. First step
-- If you havn't install [Tiny_ML_Playground](https://github.com/MaxCYCHEN/Tiny_ML_Playground), please follow the steps to install python virtual env and ***choose `tiny_ml_env`***.
+- If you havn't install [NuEdgeWise](https://github.com/MaxCYCHEN/NuEdgeWise), please follow the steps to install python virtual env and ***choose `tiny_ml_env`***.
 - Download and install Nu-Link, and please choose [KEIL Nu-Link debugger driver installer](https://github.com/OpenNuvoton/Nuvoton_Tools)
 ---
 # 2. Work Flow
