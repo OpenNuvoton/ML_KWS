@@ -29,14 +29,14 @@ ML-Tool for Keyword Spotting, which includes data collection with EVB, training,
 ## C. Traing/Testing/Converting to Tflite in `ML_kws_tflu` folder
 - Open `train.ipynb`, `test.ipynb`, `convert.ipynb`
 - The details on how to use it are described in the Jupyter Notebook.
-- (Note:) Recommand to download the google's train data at first time, and move your own train data folders into the same google train data folder.
+- (Note) It is recommended to download the Google's training data initially and then move your own training data folders into the same Google train data folder.
 
 - Open `train.ipynb`, `test.ipynb`, `convert.ipynb`.
 - The instructions on how to use these notebooks are described in the Jupyter Notebooks themselves.
-- (Note:) It is recommended to download the Google's training data initially and then move your own training data folders into the same Google train data folder.
+- (Note) It is recommended to download the Google's training data initially and then move your own training data folders into the same Google train data folder.
 
 # 3. Inference code
 - This is an example of Keyword Spotting (KWS) using TensorFlow Lite Micro.
--[ML_M460_NuKws_SampleCode](https://github.com/OpenNuvoton/ML_M460_NuKws_SampleCode) 
+- [ML_M460_NuKws_SampleCode](https://github.com/OpenNuvoton/ML_M460_NuKws_SampleCode) 
 
  
