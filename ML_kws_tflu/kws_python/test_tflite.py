@@ -17,9 +17,9 @@ import argparse
 import tensorflow as tf
 import numpy as np
 
-import data
-import models
-from test import calculate_accuracy
+from kws_python import data
+from kws_python import models
+from kws_python.test import calculate_accuracy
 
 
 def tflite_test(model_settings, audio_processor, tflite_path):

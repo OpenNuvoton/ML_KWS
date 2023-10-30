@@ -17,8 +17,8 @@ import argparse
 import numpy as np
 import tensorflow as tf
 
-import data
-import models
+from kws_python import data
+from kws_python import models
 
 
 def test():
