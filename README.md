@@ -27,7 +27,7 @@ ML-Tool for Keyword Spotting, which includes data collection with EVB, training,
 - (Note) It is recommended to download the Google's training data initially and then move your own training data folders into the same Google train data folder.
 
 # 3. Inference code
-- This is an example of Keyword Spotting (KWS) using TensorFlow Lite Micro.
-- [ML_M460_NuKws_SampleCode](https://github.com/OpenNuvoton/ML_M460_NuKws_SampleCode) 
-
+- This is an example code of Keyword Spotting (KWS) using TensorFlow Lite Micro.
+- [ML_M460_SampleCode](https://github.com/OpenNuvoton/ML_M460_SampleCode)
+  
  
