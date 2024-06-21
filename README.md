@@ -29,8 +29,12 @@ ML-Tool for Keyword Spotting, which includes data collection with EVB, training,
 # 3. Inference code
 - These are example codes of Keyword Spotting (KWS) using TensorFlow Lite Micro.
 - [ML_M460_SampleCode](https://github.com/OpenNuvoton/ML_M460_SampleCode)
+  - Please contact Nuvoton
   - `tflu_kws_arm`/`tflu_kws_arm_mc`: offline evaluation inference with DNN/DS-CNN
   - `tflu_kws_arm_rt` `tflu_kws_arm_rt_mc`: real time inference code with DNN/DS-CNN
   - `tflu_kws_record`: The example code for recording keywords, designed to pair with `record_mcu.ipynb`
+- [M55M1](https://github.com/OpenNuvoton/M55M1BSP/tree/master/SampleCode/MachineLearning)
+    - KeywordSpotting/ 
+ 
   
  
