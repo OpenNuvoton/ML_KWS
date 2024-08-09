@@ -26,6 +26,11 @@ ML-Tool for Keyword Spotting, which includes data collection with EVB, training,
 - The instructions on how to use these notebooks are described in the Jupyter Notebooks themselves.
 - (Note) It is recommended to download the Google's training data initially and then move your own training data folders into the same Google train data folder.
 
+## D. Vela Compiler on M55M1
+- Move the int8 quantized model (In `ML_kws_tflu/work/YOUR_PROJECT` after training&converting) to `ML_kws_tflu\vela\generated`.
+- update `MODEL_SRC_FILE=YOUR_INT8_TFLITE_NAME` and `MODEL_OPTIMISE_FILE=YOUR_VELA_TFLITE_NAME` in `variables.bat`.
+- Execute the `gen_model_cpp.bat`. The vela tflite and c++ model file are in `ML_kws_tflu\vela\generated`.
+
 # 3. Inference code
 - These are example codes of Keyword Spotting (KWS) using TensorFlow Lite Micro.
 - [ML_M460_SampleCode](https://github.com/OpenNuvoton/ML_M460_SampleCode)
