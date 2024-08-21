@@ -15,7 +15,7 @@ with ConnectHelper.session_with_chosen_probe(target_override="m467hjhae") as ses
     flash = target.memory_map.get_boot_memory()
 
     ###### Load firmware into device ######
-    FileProgrammer(session).program("m460.bin")
+    FileProgrammer(session).program("I2S_Codec_PDMA_SCA_max.bin")
     
     ###### Board info ######
     #print("Board MSG:")
