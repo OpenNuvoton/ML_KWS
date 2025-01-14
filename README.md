@@ -17,7 +17,7 @@ ML-Tool for Keyword Spotting, which includes data collection with EVB, training,
 - (Note) You can also use Google's training dataset (Can be downloaded at training step) during the training step.
 
 ## B. Processing the raw data in `ML_audio_aq` folder
-- Open `SoundCrop.ipynb`.
+- Open `sound_crop.ipynb`.
 - You can copy the previous label folder with raw data to `ML_audio_aq` for slicing each keyword individually.
 - The sliced data will be saved in the `dataset\<YOUR_LABEL>` folder.
 
