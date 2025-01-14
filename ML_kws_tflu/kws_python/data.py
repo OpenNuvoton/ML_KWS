@@ -17,7 +17,6 @@
 # Modified to use TensorFlow 2.0 and data pipelines.
 #
 """Functions for loading and preparing data for keyword spotting."""
-from os import walk
 import os
 import re
 import sys
@@ -109,7 +108,7 @@ def which_set(filename, validation_percentage, testing_percentage):
     # grouping wavs that are close variations of each other.
     hash_name = re.sub(r'_nohash_.*$', '', base_name)
     #print(f'hash name:\n {hash_name}')
-    
+
     # This looks a bit magical, but we need to decide whether this file should
     # go into the training, testing, or validation sets, and we want to keep
     # existing files in the same set even if more files are subsequently
@@ -121,10 +120,9 @@ def which_set(filename, validation_percentage, testing_percentage):
     percentage_hash = ((int(hash_name_hashed, 16) %
                        (MAX_NUM_WAVS_PER_CLASS + 1)) *
                        (100.0 / MAX_NUM_WAVS_PER_CLASS))
-    #print(f'hash name hashed: {hash_name_hashed}\n')
-    #print(f'hash int: {int(hash_name_hashed, 16)}\n')
-    #print(f'hash per: {percentage_hash}\n') 
-    
+    # print(f'hash name hashed: {hash_name_hashed}\n')
+    # print(f'hash int: {int(hash_name_hashed, 16)}\n')
+    # print(f'hash per: {percentage_hash}\n')
     if percentage_hash < validation_percentage:
         result = 'validation'
     elif percentage_hash < (testing_percentage + validation_percentage):
@@ -195,7 +193,7 @@ class AudioProcessor:
             ValueError("Incorrect dataset type given")
 
         use_background = (self.background_data is not None) and (mode == AudioProcessor.Modes.TRAINING)
-       
+
         dataset = dataset.map(lambda path, label: self._process_path(path, label, self.model_settings,
                                                                      background_frequency, background_volume_range,
                                                                      time_shift, use_background, self.background_data),
@@ -265,7 +263,6 @@ class AudioProcessor:
         else:
             time_shift_padding = [[0, -time_shift_amount], [0, 0]]
             time_shift_offset = [-time_shift_amount, 0]
-            
 
         padded_foreground = tf.pad(audio, time_shift_padding, mode='CONSTANT')
         sliced_foreground = tf.slice(padded_foreground, time_shift_offset, [desired_samples, -1])
@@ -307,7 +304,7 @@ class AudioProcessor:
             data_url: Web link to the tarred data to download.
             target_directory: Directory to download and extract to.
         """
-        
+
         if data_exist:
             print('SKIP download and extract data\n')
         else:
@@ -421,7 +418,7 @@ class AudioProcessor:
 
         for wav_path in tf.io.gfile.glob(str(search_pattern)):
             word = Path(wav_path).parent.name.lower()
-            
+
             # Treat the '_background_noise_' folder as a special case, since we expect
             # it to contain long audio samples we mix in to improve training.
             if word == BACKGROUND_NOISE_DIR_NAME:

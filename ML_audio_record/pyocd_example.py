@@ -1,12 +1,23 @@
+"""
+This script uses the pyOCD library to interact with a microcontroller board.
+Dependencies:
+- pyOCD library
+Usage:
+- Ensure the pyOCD library is installed.
+- Update the firmware file path ("I2S_Codec_PDMA_SCA_max.bin") if necessary.
+- Run the script to perform the operations on the connected target board.
+Note:
+- The script is configured to connect to a target with the identifier "m467hjhae".
+- Some sections of the code are commented out and can be uncommented for additional functionality 
+- such as resetting and halting the target, stepping through instructions, and resuming execution.
+"""
+import logging
 from pyocd.core.helpers import ConnectHelper
 from pyocd.flash.file_programmer import FileProgrammer
 from pyocd.core.memory_map import MemoryType
 from pyocd.coresight.cortex_m import CortexM
 
-import logging
 logging.basicConfig(level=logging.INFO)
-
-import numpy as np
 
 with ConnectHelper.session_with_chosen_probe(target_override="m467hjhae") as session:
 
@@ -16,18 +27,18 @@ with ConnectHelper.session_with_chosen_probe(target_override="m467hjhae") as ses
 
     ###### Load firmware into device ######
     FileProgrammer(session).program("I2S_Codec_PDMA_SCA_max.bin")
-    
+
     ###### Board info ######
-    #print("Board MSG:")
-    #print("Board's name:%s" % board.name)
-    #print("Board's description:%s" % board.description)
-    #print("Board's target_type:%s" % board.target_type)
-    #print("Board's unique_id:%s" % board.unique_id)
-    #print("Board's test_binary:%s" % board.test_binary)
-    #print("Unique ID: %s" % board.unique_id)
-    
+    print("Board MSG:")
+    print(f"Board's name: {board.name}")
+    print(f"Board's description: {board.description}")
+    print(f"Board's target_type: {board.target_type}")
+    print(f"Board's unique_id: {board.unique_id}")
+    print(f"Board's test_binary: {board.test_binary}")
+    print(f"Unique ID: {board.unique_id}")
+
     ###### ram/rom info ######
-    print("Part number:%s" % target.part_number)
+    print(f"Part number:{target.part_number}")
     memory_map = target.get_memory_map()
     ram_region = memory_map.get_default_region_of_type(MemoryType.RAM)
     rom_region = memory_map.get_boot_memory()
@@ -37,21 +48,21 @@ with ConnectHelper.session_with_chosen_probe(target_override="m467hjhae") as ses
     print(ram_region)
     print("rom_region(flash):")
     print(rom_region)
-    
+
     ###### Irq info ######
-    #print("Irq:")
-    #print(board.target.irq_table)
-    
+    print("Irq:")
+    print(board.target.irq_table)
+
     ###### Basic info ######
-    print("pc reg: 0x%X" % target.read_core_register('pc'))
-    print("CPUID:0x%x" % target.read32(CortexM.CPUID))
-    #print("device id:0x%x" % target.read32(0x40015800))
-    #print("flash size:%x KB" % target.read32(0x1FFFF7CC))
+    print(f"pc reg: 0x{target.read_core_register('pc'):X}")
+    print(f"CPUID:0x{target.read32(CortexM.CPUID):x}")
+    print(f"device id:0x{target.read32(0x40015800):x}")
+    print(f"flash size:{target.read32(0x1FFFF7CC):x} KB")
 
 
-    ###### Reset and Run ######
+    ###### Reset and Run Example ######
     #target.reset_and_halt(reset_type = target.ResetType.SW)
-   
+
     ## Read some registers.
     #print("pc: 0x%X" % target.read_core_register("pc"))
 
@@ -65,16 +76,15 @@ with ConnectHelper.session_with_chosen_probe(target_override="m467hjhae") as ses
     #target.reset_and_halt()
 
     #print("pc: 0x%X" % target.read_core_register("pc"))
-    
+
     ###### write sram ######
     target.write32(0x20000030, 0xA2332227)
-    print("write value:%x" % target.read32(0x20000030))
-    
+    print(f"write value:{target.read32(0x20000030):x}")
+
     ###### read block size ######
-    sram_begain = 0x20000034
-    x = target.read_memory_block32(sram_begain, 5)
-    print("{}, TxBuffVal:{:x}".format( hex(sram_begain), target.read32((sram_begain))))
-    print("{}, TxBuffVal:{:x}".format( hex(sram_begain), target.read32((sram_begain + 4))))
-    print("{}, TxBuffVal:{:x}".format( hex(sram_begain), target.read32((sram_begain + 16))))
+    SRAM_BEGAIN = 0x20000034
+    x = target.read_memory_block32(SRAM_BEGAIN, 5)
+    print(f"{hex(SRAM_BEGAIN)}, TxBuffVal:{target.read32(SRAM_BEGAIN):x}")
+    print(f"{hex(SRAM_BEGAIN)}, TxBuffVal:{target.read32(SRAM_BEGAIN + 4):x}")
+    print(f"{hex(SRAM_BEGAIN)}, TxBuffVal:{target.read32(SRAM_BEGAIN + 16):x}")
     print(x)
-    

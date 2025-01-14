@@ -23,9 +23,9 @@ def convert_tflite_to_array(open_file, tflite_path):
         tflite_path: Path to the TFLite to convert.
     """
 
-    open_file.write(f'#include <cstdint>\n')
-    open_file.write(f'#include <cstddef>\n')
-    open_file.write(f'#include "BufAttributes.h"\n\n')
+    open_file.write('#include <cstdint>\n')
+    open_file.write('#include <cstddef>\n')
+    open_file.write('#include "BufAttributes.h"\n\n')
 
     model_arr_name = "g_kwsModel"
     open_file.write(f"static const uint8_t {model_arr_name}[] ALIGNMENT_ATTRIBUTE = ")
@@ -78,9 +78,18 @@ def _model_hex_bytes(tflite_path):
             byte = tflite_model.read(1)
 
 
-def main():
-    with open(FLAGS.output_path, 'w') as f:
-        convert_tflite_to_array(f, FLAGS.tflite_path)
+def main(flags):
+    """
+    Main function to convert a TensorFlow Lite model to an array and save it to a specified output path.
+    Args:
+        flags: An object containing the following attributes:
+            output_path (str): The path where the output array will be saved.
+            tflite_path (str): The path to the TensorFlow Lite model file.
+    Returns:
+        None
+    """
+    with open(flags.output_path, 'w', encoding="utf-8") as f:
+        convert_tflite_to_array(f, flags.tflite_path)
 
 
 if __name__ == '__main__':
@@ -97,4 +106,4 @@ if __name__ == '__main__':
         help='Path used for the output file.')
 
     FLAGS, _ = parser.parse_known_args()
-    main()
+    main(FLAGS)

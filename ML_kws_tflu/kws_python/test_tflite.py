@@ -37,7 +37,7 @@ def tflite_test(model_settings, audio_processor, tflite_path):
     predicted_indices = []
 
     print("Running testing on test set...")
-    for mfcc, label in test_data:
+    for mfcc, _ in test_data:
         prediction = tflite_inference(mfcc, tflite_path)
         predicted_indices.append(np.squeeze(tf.argmax(prediction, axis=1)))
 
