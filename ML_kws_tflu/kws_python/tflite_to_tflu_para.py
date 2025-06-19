@@ -99,16 +99,9 @@ def _model_hex_bytes(tflite_path):
             byte = tflite_model.read(1)
 
 
-def main(flags):
-    """
-    Main function to convert a TensorFlow Lite model to an array and save it to a file.
-    Args:
-        flags: An object containing the following attributes:
-            - output_path (str): The path where the output file will be saved.
-            - tflite_path (str): The path to the TensorFlow Lite model file.
-    """
-    with open(flags.output_path, 'w', encoding="utf-8") as f:
-        convert_tflite_to_array(f, flags.tflite_path)
+def main():
+    with open(FLAGS.output_path, 'w') as f:
+        convert_tflite_to_array(f, FLAGS.tflite_path)
 
 
 if __name__ == '__main__':
@@ -140,4 +133,4 @@ if __name__ == '__main__':
         help='How many bins to use for the MFCC fingerprint',)
 
     FLAGS, _ = parser.parse_known_args()
-    main(FLAGS)
+    main()

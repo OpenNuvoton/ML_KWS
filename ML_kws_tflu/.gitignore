@@ -2,6 +2,7 @@
 *.wav
 *.jpg
 tmp/
+work/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
