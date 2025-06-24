@@ -32,14 +32,20 @@ def tflite_test(model_settings, audio_processor, tflite_path):
         audio_processor: Audio processor class object.
         tflite_path: Path to TFLite file to use for inference.
     """
+    test_num = 200
     test_data = audio_processor.get_data(audio_processor.Modes.TESTING).batch(1)
-    expected_indices = np.concatenate([y for x, y in test_data])
+    all_indices = np.concatenate([y for x, y in test_data])
+    expected_indices = all_indices[:test_num] if len(all_indices) >= test_num else all_indices
     predicted_indices = []
 
     print("Running testing on test set...")
+    test_idx = 0
     for mfcc, _ in test_data:
+        test_idx += 1
         prediction = tflite_inference(mfcc, tflite_path)
         predicted_indices.append(np.squeeze(tf.argmax(prediction, axis=1)))
+        if test_idx >= test_num:
+            break
 
     test_accuracy = calculate_accuracy(predicted_indices, expected_indices)
     confusion_matrix = tf.math.confusion_matrix(expected_indices, predicted_indices,
@@ -47,7 +53,8 @@ def tflite_test(model_settings, audio_processor, tflite_path):
 
     print(confusion_matrix.numpy())
     print(f'Test accuracy = {test_accuracy * 100:.2f}%'
-          f'(N={audio_processor.set_size(audio_processor.Modes.TESTING)})')
+          #f'(N={audio_processor.set_size(audio_processor.Modes.TESTING)})'
+          f'(N={test_num})')
 
 
 def tflite_inference(input_data, tflite_path):
