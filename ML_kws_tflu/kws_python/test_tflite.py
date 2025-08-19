@@ -16,6 +16,7 @@ import argparse
 
 import tensorflow as tf
 import numpy as np
+from tqdm import tqdm
 
 from kws_python import data
 from kws_python import models
@@ -32,7 +33,7 @@ def tflite_test(model_settings, audio_processor, tflite_path):
         audio_processor: Audio processor class object.
         tflite_path: Path to TFLite file to use for inference.
     """
-    test_num = 200
+    test_num = 800
     test_data = audio_processor.get_data(audio_processor.Modes.TESTING).batch(1)
     all_indices = np.concatenate([y for x, y in test_data])
     expected_indices = all_indices[:test_num] if len(all_indices) >= test_num else all_indices
@@ -40,12 +41,15 @@ def tflite_test(model_settings, audio_processor, tflite_path):
 
     print("Running testing on test set...")
     test_idx = 0
+    pbar = tqdm(total=test_num, ncols=80)
     for mfcc, _ in test_data:
         test_idx += 1
         prediction = tflite_inference(mfcc, tflite_path)
         predicted_indices.append(np.squeeze(tf.argmax(prediction, axis=1)))
+        pbar.update(1)
         if test_idx >= test_num:
             break
+    pbar.close()    
 
     test_accuracy = calculate_accuracy(predicted_indices, expected_indices)
     confusion_matrix = tf.math.confusion_matrix(expected_indices, predicted_indices,
@@ -105,7 +109,8 @@ def tflite_inference(input_data, tflite_path):
 def main():
     model_settings = models.prepare_model_settings(len(data.prepare_words_list(FLAGS.wanted_words.split(','))),
                                                    FLAGS.sample_rate, FLAGS.clip_duration_ms, FLAGS.window_size_ms,
-                                                   FLAGS.window_stride_ms, FLAGS.dct_coefficient_count)
+                                                   FLAGS.window_stride_ms, FLAGS.dct_coefficient_count,
+                                                   FLAGS.upper_freq, FLAGS.lower_freq, FLAGS.filterbank_channel_count)
 
     audio_processor = data.AudioProcessor(data_exist=FLAGS.data_exist,
                                           data_url=FLAGS.data_url,
@@ -193,6 +198,21 @@ if __name__ == '__main__':
         type=int,
         default=40,
         help='How many bins to use for the MFCC fingerprint',)
+    parser.add_argument(
+        '--upper_freq',
+        type=int,
+        default=4000,
+        help='The highest frequency to use when calculating the ceptstrum',)
+    parser.add_argument(
+        '--lower_freq',
+        type=int,
+        default=20,
+        help='The lowest frequency to use when calculating the ceptstrum',)
+    parser.add_argument(
+        '--filterbank_channel_count',
+        type=int,
+        default=40,
+        help='Defaults to `40`. Resolution of the Mel bank used internally',)
     parser.add_argument(
         '--wanted_words',
         type=str,

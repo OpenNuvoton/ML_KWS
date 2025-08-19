@@ -19,7 +19,8 @@ import tensorflow as tf
 
 def prepare_model_settings(label_count, sample_rate, clip_duration_ms,
                            window_size_ms, window_stride_ms,
-                           dct_coefficient_count):
+                           dct_coefficient_count, upper_freq, lower_freq,
+                           filterbank_channel_count):
     """Calculates common settings needed for all models.
 
     Args:
@@ -52,6 +53,9 @@ def prepare_model_settings(label_count, sample_rate, clip_duration_ms,
         'fingerprint_size': fingerprint_size,
         'label_count': label_count,
         'sample_rate': sample_rate,
+        'upper_freq': upper_freq,
+        'lower_freq': lower_freq,
+        'filterbank_channel_count': filterbank_channel_count,
     }
 
 

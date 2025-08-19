@@ -26,11 +26,13 @@ def train():
     print('model_set')
     model_settings = models.prepare_model_settings(len(data.prepare_words_list(FLAGS.wanted_words.split(','))),
                                                    FLAGS.sample_rate, FLAGS.clip_duration_ms, FLAGS.window_size_ms,
-                                                   FLAGS.window_stride_ms, FLAGS.dct_coefficient_count)
+                                                   FLAGS.window_stride_ms, FLAGS.dct_coefficient_count,
+                                                   FLAGS.upper_freq, FLAGS.lower_freq, FLAGS.filterbank_channel_count)
     
     print(len(data.prepare_words_list(FLAGS.wanted_words.split(','))),
                                                    FLAGS.sample_rate, FLAGS.clip_duration_ms, FLAGS.window_size_ms,
-                                                   FLAGS.window_stride_ms, FLAGS.dct_coefficient_count)
+                                                   FLAGS.window_stride_ms, FLAGS.dct_coefficient_count,
+                                                   FLAGS.upper_freq, FLAGS.lower_freq, FLAGS.filterbank_channel_count)
 
     # Create the model.
     model = models.create_model(model_settings, FLAGS.model_architecture, FLAGS.model_size_info, True)
@@ -184,6 +186,21 @@ if __name__ == "__main__":
         type=int,
         default=40,
         help='How many bins to use for the MFCC fingerprint',)
+    parser.add_argument(
+        '--upper_freq',
+        type=int,
+        default=4000,
+        help='The highest frequency to use when calculating the ceptstrum',)
+    parser.add_argument(
+        '--lower_freq',
+        type=int,
+        default=20,
+        help='The lowest frequency to use when calculating the ceptstrum',)
+    parser.add_argument(
+        '--filterbank_channel_count',
+        type=int,
+        default=40,
+        help='Defaults to `40`. Resolution of the Mel bank used internally',)
     parser.add_argument(
         '--how_many_training_steps',
         type=str,

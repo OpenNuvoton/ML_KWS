@@ -59,7 +59,7 @@ def load_wav_file(wav_filename, desired_samples):
     return decoded_wav.audio, decoded_wav.sample_rate
 
 
-def calculate_mfcc(audio_signal, audio_sample_rate, window_size, window_stride, num_mfcc):
+def calculate_mfcc(audio_signal, audio_sample_rate, window_size, window_stride, num_mfcc, upper_freq=4000, lower_freq=20, filterbank_channel_count=40):
     """Returns Mel Frequency Cepstral Coefficients (MFCC) for a given audio signal.
 
     Args:
@@ -75,7 +75,8 @@ def calculate_mfcc(audio_signal, audio_sample_rate, window_size, window_stride, 
     spectrogram = audio_ops.audio_spectrogram(input=audio_signal, window_size=window_size, stride=window_stride,
                                               magnitude_squared=True)
 
-    mfcc_features = audio_ops.mfcc(spectrogram, audio_sample_rate, dct_coefficient_count=num_mfcc)
+    mfcc_features = audio_ops.mfcc(spectrogram, audio_sample_rate, dct_coefficient_count=num_mfcc, 
+                                   upper_frequency_limit=upper_freq, lower_frequency_limit=lower_freq, filterbank_channel_count=filterbank_channel_count)
 
     return mfcc_features
 
@@ -289,8 +290,8 @@ class AudioProcessor:
         background_clamp = tf.clip_by_value(background_add, -1.0, 1.0)
 
         mfcc = calculate_mfcc(background_clamp, sample_rate, model_settings['window_size_samples'],
-                              model_settings['window_stride_samples'],
-                              model_settings['dct_coefficient_count'])
+                              model_settings['window_stride_samples'], model_settings['dct_coefficient_count'], 
+                              model_settings['upper_freq'], model_settings['lower_freq'], model_settings['filterbank_channel_count'])
         mfcc = tf.reshape(mfcc, [-1])
 
         return mfcc, label

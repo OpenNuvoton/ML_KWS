@@ -174,6 +174,21 @@ if __name__ == '__main__':
         type=str,
         default='ds_cnn',
         help='m55m1 only supports ds_cnn now')
+    parser.add_argument(
+        '--upper_freq',
+        type=int,
+        default=4000,
+        help='The highest frequency to use when calculating the ceptstrum',)
+    parser.add_argument(
+        '--lower_freq',
+        type=int,
+        default=20,
+        help='The lowest frequency to use when calculating the ceptstrum',)
+    parser.add_argument(
+        '--filterbank_channel_count',
+        type=int,
+        default=40,
+        help='Defaults to `40`. Resolution of the Mel bank used internally',)
     
     FLAGS, _ = parser.parse_known_args()
     main()

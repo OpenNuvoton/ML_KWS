@@ -131,6 +131,21 @@ if __name__ == '__main__':
         type=int,
         default=40,
         help='How many bins to use for the MFCC fingerprint',)
+    parser.add_argument(
+        '--upper_freq',
+        type=int,
+        default=4000,
+        help='The highest frequency to use when calculating the ceptstrum',)
+    parser.add_argument(
+        '--lower_freq',
+        type=int,
+        default=20,
+        help='The lowest frequency to use when calculating the ceptstrum',)
+    parser.add_argument(
+        '--filterbank_channel_count',
+        type=int,
+        default=40,
+        help='Defaults to `40`. Resolution of the Mel bank used internally',)
 
     FLAGS, _ = parser.parse_known_args()
     main()
